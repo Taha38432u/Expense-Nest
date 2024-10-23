@@ -1,5 +1,13 @@
+import { Outlet } from "react-router-dom";
+import MainHeading from "../ui/MainHeading.jsx";
+
 function Expense() {
-  return <div></div>;
+  return (
+    <>
+      <MainHeading content={"Transactions"} />
+      <Outlet />
+    </>
+  );
 }
 
 export default Expense;

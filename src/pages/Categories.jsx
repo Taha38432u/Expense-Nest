@@ -1,11 +1,10 @@
 import { Outlet } from "react-router-dom";
+import MainHeading from "../ui/MainHeading.jsx";
 
 function Categories() {
   return (
     <>
-      <h1 className="text-center text-6xl font-semibold text-gray-100">
-        Categories
-      </h1>
+     <MainHeading content={"Categories"} />
       <Outlet />
     </>
   );

@@ -23,6 +23,10 @@ import ChangeUserName from "./features/authentication/ChangeUserName.jsx";
 import ChangePassword from "./features/authentication/ChangePassword.jsx";
 import ShowCategories from "./features/categories/ShowCategories.jsx";
 import EditCategoryForm from "./features/categories/EditCategoryForm.jsx";
+import AddTransaction from "./features/transactions/AddTransaction.jsx";
+import EditTransaction from "./features/transactions/editTransaction.jsx";
+import ShowTransactions from "./features/transactions/showTransactions.jsx";
+import EditTransactionForm from "./features/transactions/EditTransactionForm.jsx";
 
 // Custom context providers
 
@@ -63,7 +67,16 @@ function App() {
 
               {/* Other main routes */}
               <Route path="dashboard" element={<Dashboard />} />
-              <Route path="expenses" element={<Expense />} />
+              <Route path="transactions" element={<Expense />}>
+                <Route path={"add"} element={<AddTransaction />} />
+                <Route path={"edit"} element={<EditTransaction />} />
+                <Route
+                  path={"edit/:transactionId"}
+                  element={<EditTransactionForm />}
+                />
+                <Route path={"show"} element={<ShowTransactions />} />
+              </Route>
+
               <Route path="budget" element={<Budget />} />
               <Route path="filter" element={<Filter />} />
 

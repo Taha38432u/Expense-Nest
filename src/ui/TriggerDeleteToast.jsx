@@ -2,11 +2,17 @@ import { toast } from "react-hot-toast";
 import CustomDeleteToast from "./CustomToast.jsx";
 
 // Function to trigger the custom delete confirmation toast
-function triggerDeleteToast(item, handleConfirmAction, disabledCondition) {
+function triggerDeleteToast(
+  item = "",
+  handleConfirmAction,
+  disabledCondition,
+  transaction,
+) {
+  const emptyItem = item === "";
   toast.custom(
     (t) => (
       <CustomDeleteToast
-        message={`Are you sure you want to delete ${item}?`}
+        message={`Are you sure you want to delete ${emptyItem ? transaction : item}?`}
         onConfirm={() => {
           handleConfirmAction(); // Call the function for confirmation
           toast.dismiss(t.id); // Close the toast

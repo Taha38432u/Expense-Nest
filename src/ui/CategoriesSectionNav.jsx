@@ -19,7 +19,7 @@ function CategoriesSectionNav() {
   return (
     <li>
       <LinkContainer
-        // to="/categories"
+        // to="/Categories"
         onLinkClick={() => {
           setShowCategories((prev) => !prev);
           setActiveLink("categories");
@@ -37,7 +37,7 @@ function CategoriesSectionNav() {
           <li className="mt-4">
             <LinkContainer
               to="/categories/add"
-              onLinkClick={() => handleSubLinkClick("categories/add")}
+              onLinkClick={() => handleSubLinkClick("Categories/add")}
               activeLink={activeLink}
               compareValue="categories/add"
             >
@@ -49,7 +49,7 @@ function CategoriesSectionNav() {
           <li>
             <LinkContainer
               to="/categories/edit"
-              onLinkClick={() => handleSubLinkClick("categories/edit")}
+              onLinkClick={() => handleSubLinkClick("Categories/edit")}
               activeLink={activeLink}
               compareValue="categories/edit"
             >
@@ -61,7 +61,7 @@ function CategoriesSectionNav() {
           <li>
             <LinkContainer
               to="/categories/show"
-              onLinkClick={() => handleSubLinkClick("categories/show")}
+              onLinkClick={() => handleSubLinkClick("Categories/show")}
               activeLink={activeLink}
               compareValue="categories/show"
             >

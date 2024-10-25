@@ -1,6 +1,5 @@
 import MainHeading from "../ui/MainHeading.jsx";
-import { Outlet } from "react-router-dom";
-import GetUserOptions from "../features/filter/GetUserOptions.jsx";
+import GetUserOptions from "../features/Filter/GetUserOptions.jsx";
 
 function Filter() {
   return (

@@ -1,9 +1,9 @@
 import { useForm } from "react-hook-form";
 import Button from "../../ui/Button.jsx";
 import FormRow from "../../ui/FormRow.jsx";
-import useUser from "../authentication/useUser.js";
+import useUser from "../Authentication/useUser.js";
 import useEditCategory from "./useEditCategory.js";
-import { useNavigate, useParams, useSearchParams } from "react-router-dom"; // Adjust the import path as necessary
+import { useNavigate, useParams } from "react-router-dom"; // Adjust the import path as necessary
 
 function AddCategory() {
   const { user } = useUser();
@@ -12,8 +12,6 @@ function AddCategory() {
   const { errors } = formState;
   const { editCategory, isUpdating } = useEditCategory();
   const navigate = useNavigate();
-
-  const [searchParams, setSearchParams] = useSearchParams();
 
   const { category: oldCategoryName } = useParams();
 

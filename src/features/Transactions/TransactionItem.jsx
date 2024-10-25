@@ -2,10 +2,10 @@ import { HiRectangleStack } from "react-icons/hi2";
 import Button from "../../ui/Button.jsx";
 import { useNavigate } from "react-router-dom";
 import triggerDeleteToast from "../../ui/TriggerDeleteToast.jsx";
-import { GetUserDetails } from "../authentication/useDetailsUser.js";
+import { GetUserDetails } from "../Authentication/useDetailsUser.js";
 import useDeleteTransaction from "./useDeleteTransaction.js"; // Import useNavigate
-import useBudgets from "../budget/useBudgets.js"; // Import useBudgets to update the budget
-import useUpdateBudgetWithTransaction from "../budget/useUpdateBudgetOnTransaction.js"; // Import useUpdateBudgetWithTransaction hook
+import useBudgets from "../Budget/useBudgets.js"; // Import useBudgets to update the Budget
+import useUpdateBudgetWithTransaction from "../Budget/useUpdateBudgetOnTransaction.js"; // Import useUpdateBudgetWithTransaction hook
 
 function TransactionItem({
   id,
@@ -15,13 +15,13 @@ function TransactionItem({
   transactionDate,
   isEdit,
   filtered = false,
-  budgetId, // Add budgetId if needed to identify the budget related to the transaction
+  budgetId, // Add budgetId if needed to identify the Budget related to the transaction
 }) {
   const navigate = useNavigate(); // Hook for navigation
   const { deleteTransaction, isDeleting } = useDeleteTransaction();
   const { email: userEmail } = GetUserDetails();
   const { budgets } = useBudgets(userEmail); // Get budgets associated with the user
-  const { updateBudget } = useUpdateBudgetWithTransaction(); // Hook to update the budget
+  const { updateBudget } = useUpdateBudgetWithTransaction(); // Hook to update the Budget
 
   // Format the date into a readable format
   const formattedDate = new Date(transactionDate).toLocaleDateString("en-US", {
@@ -44,16 +44,16 @@ function TransactionItem({
   };
 
   const handleDeleteClick = () => {
-    // Find the corresponding budget by budgetId (assuming each transaction is linked to a budget)
+    // Find the corresponding Budget by budgetId (assuming each transaction is linked to a Budget)
     const selectedBudget = budgets.find((budget) => budget.id === budgetId);
 
-    if (!selectedBudget) return; // If no budget is found, exit
+    if (!selectedBudget) return; // If no Budget is found, exit
 
     // Define the updateBudget logic: subtract the transaction amount from spentAmount
     const updateBudgetSpentAmount = async () => {
       const updatedSpentAmount = selectedBudget.spentAmount - amount;
 
-      // Update the budget's spentAmount after deleting the transaction
+      // Update the Budget's spentAmount after deleting the transaction
       await updateBudget({
         id: budgetId,
         spentAmount: updatedSpentAmount,
@@ -61,14 +61,14 @@ function TransactionItem({
       });
     };
 
-    // Trigger the deleteTransaction and update the budget spentAmount
+    // Trigger the deleteTransaction and update the Budget spentAmount
     triggerDeleteToast(
       "", // Optional message for the toast
       async () => {
         // First delete the transaction
         await deleteTransaction({ userEmail, id });
 
-        // Then update the budget
+        // Then update the Budget
         await updateBudgetSpentAmount();
       },
       isDeleting,

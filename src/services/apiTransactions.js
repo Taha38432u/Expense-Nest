@@ -4,14 +4,13 @@ export async function getTransactions({ email }) {
   const { data, error } = await supabase
     .from("Transactions")
     .select("*") // Select the desired columns
-    .eq("userEmail", email); // Filter categories by user email
+    .eq("userEmail", email); // Filter Categories by user email
 
   if (error) {
-    console.error("Error fetching categories:", error);
     return []; // Return an empty array on error
   }
 
-  return data; // Return the retrieved categories
+  return data; // Return the retrieved Categories
 }
 
 export async function insertTransaction(
@@ -52,7 +51,7 @@ export async function editTransaction(
 }
 
 export async function deleteTransaction(userEmail, id) {
-  const { data, error } = await supabase
+  const { error } = await supabase
     .from("Transactions")
     .delete()
     .eq("id", id) // First condition

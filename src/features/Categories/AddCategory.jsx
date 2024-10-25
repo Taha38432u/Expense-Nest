@@ -1,9 +1,8 @@
 import { useForm } from "react-hook-form";
 import Button from "../../ui/Button.jsx";
 import FormRow from "../../ui/FormRow.jsx";
-import useUser from "../authentication/useUser.js";
+import useUser from "../Authentication/useUser.js";
 import useCategories from "./useCategories.js";
-import supabase from "../../services/supabase";
 import Loading from "../../ui/Loading.jsx";
 import useNewCategory from "./useInsertCategory.js"; // Adjust the import path as necessary
 

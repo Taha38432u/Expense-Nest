@@ -1,11 +1,11 @@
 import useCategories from "./useCategories.js";
 import Loading from "../../ui/Loading.jsx";
-import { GetUserDetails } from "../authentication/useDetailsUser.js";
+import { GetUserDetails } from "../Authentication/useDetailsUser.js";
 import CategoryItem from "./CategoryItem"; // Ensure this is correctly imported
 
-function EditCategories() {
+function ShowCategories() {
   const { email } = GetUserDetails(); // Get user details
-  const { isLoading, categories } = useCategories(email); // Fetch categories
+  const { isLoading, categories } = useCategories(email); // Fetch Categories
 
   if (isLoading) return <Loading />;
 
@@ -20,14 +20,13 @@ function EditCategories() {
   return (
     <div className="min-h-screen p-8">
       <h1 className="mb-8 mt-8 text-center text-3xl font-bold text-white">
-        Edit Categories
+        All Categories
       </h1>
       <ul className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3">
         {categories.map((category) => (
           <CategoryItem
             key={category.id}
             categoryName={category.categoryName}
-            isEdit={true}
           />
         ))}
       </ul>
@@ -35,4 +34,4 @@ function EditCategories() {
   );
 }
 
-export default EditCategories;
+export default ShowCategories;

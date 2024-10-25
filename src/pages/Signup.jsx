@@ -1,4 +1,4 @@
-import SignupForm from "../features/authentication/SignupForm.jsx";
+import SignupForm from "../features/Authentication/SignupForm.jsx";
 
 function Signup() {
   return (

@@ -2,7 +2,7 @@ import LinkContainer from "./NavLink.jsx";
 import { HiLockClosed, HiUserCircle, HiUsers } from "react-icons/hi2";
 import { HiLogout } from "react-icons/hi";
 import { useMainNav } from "./MainNavContext.jsx";
-import { useLogout } from "../features/authentication/useLogout.js";
+import { useLogout } from "../features/Authentication/useLogout.js";
 
 function AccountSectionNav() {
   const {

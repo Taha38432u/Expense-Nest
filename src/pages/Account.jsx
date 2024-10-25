@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import useUser from "../features/authentication/useUser.js";
+import useUser from "../features/Authentication/useUser.js";
 import MainHeading from "../ui/MainHeading.jsx";
 
 function Account() {

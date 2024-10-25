@@ -1,4 +1,4 @@
-import LoginForm from "../features/authentication/LoginForm.jsx";
+import LoginForm from "../features/Authentication/LoginForm.jsx";
 
 function Signup() {
   return (

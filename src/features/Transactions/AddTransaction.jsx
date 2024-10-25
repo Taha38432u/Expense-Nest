@@ -1,17 +1,17 @@
 import { useForm } from "react-hook-form";
 import Button from "../../ui/Button.jsx";
 import FormRow from "../../ui/FormRow.jsx";
-import useUser from "../authentication/useUser.js";
-import useCategories from "../categories/useCategories.js";
+import useUser from "../Authentication/useUser.js";
+import useCategories from "../Categories/useCategories.js";
 import useNewTransaction from "./useInsertTransaction.js";
-import useBudgets from "../budget/useBudgets.js"; // Assuming this is your custom hook
+import useBudgets from "../Budget/useBudgets.js"; // Assuming this is your custom hook
 import Spinner from "../../ui/Spinner.jsx";
-import useUpdateBudgetWithTransaction from "../budget/useUpdateBudgetOnTransaction.js"; // Adjust the import path as necessary
+import useUpdateBudgetWithTransaction from "../Budget/useUpdateBudgetOnTransaction.js"; // Adjust the import path as necessary
 
 function AddTransaction() {
   const { user } = useUser();
   const { email } = user.user_metadata;
-  const { isLoading: isLoadingCategories, categories } = useCategories(email); // Fetch categories
+  const { isLoading: isLoadingCategories, categories } = useCategories(email); // Fetch Categories
   const { register, handleSubmit, formState } = useForm();
   const { errors } = formState;
   const { insertTransaction, isInserting } = useNewTransaction(); // Insert transaction logic
@@ -23,17 +23,17 @@ function AddTransaction() {
   const currentDate = new Date();
 
   const activeBudgets = budgets.filter((budget) => {
-    const startDate = new Date(budget.startDate); // Assuming the budget has a startDate field
-    const endDate = new Date(budget.endDate); // Assuming the budget has an endDate field
+    const startDate = new Date(budget.startDate); // Assuming the Budget has a startDate field
+    const endDate = new Date(budget.endDate); // Assuming the Budget has an endDate field
 
-    // Check if the budget is active, and the current date falls within the start and end dates
+    // Check if the Budget is active, and the current date falls within the start and end dates
     return (
       budget.active === true &&
       currentDate >= startDate &&
       currentDate <= endDate
     );
   });
-  // Assuming isActive is a boolean indicating the budget's status
+  // Assuming isActive is a boolean indicating the Budget's status
 
   async function onSubmit({ categoryName, amount, description, budgetId }) {
     if (budgetId === "none") {
@@ -46,7 +46,7 @@ function AddTransaction() {
       });
       return;
     }
-    // Find the budget using find instead of filter
+    // Find the Budget using find instead of Filter
     const selectedBudget = budgets.find(
       (budget) => budget.id === Number(budgetId),
     );
@@ -62,7 +62,7 @@ function AddTransaction() {
       budgetId: Number(budgetId), // Include the selected budgetId
     });
 
-    // Update the budget with the new spent amount
+    // Update the Budget with the new spent amount
     await updateBudget({
       id: budgetId,
       spentAmount,
@@ -135,7 +135,7 @@ function AddTransaction() {
             <select
               className="input"
               {...register("budgetId", {
-                required: "Please select a budget",
+                required: "Please select a Budget",
               })}
             >
               <option value="none">None</option>

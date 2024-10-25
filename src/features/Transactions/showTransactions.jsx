@@ -1,6 +1,6 @@
 import useTransactions from "./useTransactions.js";
 import Spinner from "../../ui/Spinner.jsx";
-import { GetUserDetails } from "../authentication/useDetailsUser.js";
+import { GetUserDetails } from "../Authentication/useDetailsUser.js";
 import TransactionItem from "./TransactionItem"; // Make sure this is correctly imported
 
 function ShowTransactions() {

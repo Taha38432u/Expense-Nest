@@ -3,7 +3,7 @@ import Button from "../../ui/Button.jsx";
 import { useNavigate } from "react-router-dom"; // Use navigate for programmatic navigation
 import triggerDeleteToast from "../../ui/TriggerDeleteToast.jsx";
 import useDeleteCategory from "./useDeleteCategory.js";
-import { GetUserDetails } from "../authentication/useDetailsUser.js";
+import { GetUserDetails } from "../Authentication/useDetailsUser.js";
 
 function CategoryItem({ categoryName, isEdit }) {
   const navigate = useNavigate(); // Hook for navigation

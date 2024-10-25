@@ -16,20 +16,20 @@ import Login from "./pages/Login.jsx";
 import Signup from "./pages/Signup.jsx";
 
 // Features
-import AddCategory from "./features/categories/AddCategory.jsx";
-import EditCategories from "./features/categories/EditCategories.jsx";
+import AddCategory from "./features/Categories/AddCategory.jsx";
+import EditCategories from "./features/Categories/EditCategories.jsx";
 import ProtectedRoute from "./ui/ProtectedRoute.jsx";
-import ChangeUserName from "./features/authentication/ChangeUserName.jsx";
-import ChangePassword from "./features/authentication/ChangePassword.jsx";
-import ShowCategories from "./features/categories/ShowCategories.jsx";
-import EditCategoryForm from "./features/categories/EditCategoryForm.jsx";
-import AddTransaction from "./features/transactions/AddTransaction.jsx";
-import EditTransaction from "./features/transactions/editTransaction.jsx";
-import ShowTransactions from "./features/transactions/showTransactions.jsx";
-import EditTransactionForm from "./features/transactions/EditTransactionForm.jsx";
-import AddBudget from "./features/budget/AddBudget.jsx";
-import EditBudget from "./features/budget/EditBudget.jsx";
-import EditBudgetForm from "./features/budget/EditBudgetForm.jsx";
+import ChangeUserName from "./features/Authentication/ChangeUserName.jsx";
+import ChangePassword from "./features/Authentication/ChangePassword.jsx";
+import ShowCategories from "./features/Categories/ShowCategories.jsx";
+import EditCategoryForm from "./features/Categories/EditCategoryForm.jsx";
+import AddTransaction from "./features/Transactions/AddTransaction.jsx";
+import EditTransaction from "./features/Transactions/editTransaction.jsx";
+import ShowTransactions from "./features/Transactions/showTransactions.jsx";
+import EditTransactionForm from "./features/Transactions/EditTransactionForm.jsx";
+import AddBudget from "./features/Budget/AddBudget.jsx";
+import EditBudget from "./features/Budget/EditBudget.jsx";
+import EditBudgetForm from "./features/Budget/EditBudgetForm.jsx";
 
 // Custom context providers
 

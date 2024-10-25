@@ -1,11 +1,10 @@
-import useLogIn from "../features/authentication/useLogIn.js";
 import Spinner from "./Spinner.jsx";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import useUser from "../features/authentication/useUser.js";
+import useUser from "../features/Authentication/useUser.js";
 
 function ProtectedRoute({ children }) {
-  const { user, isLoading, isAuthenticated } = useUser();
+  const { isLoading, isAuthenticated } = useUser();
   const navigate = useNavigate();
 
   useEffect(() => {

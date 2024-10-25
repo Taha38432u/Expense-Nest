@@ -1,18 +1,17 @@
 import supabase from "./supabase.js";
 
 export async function getCategories({ email }) {
-  // Query categories for the user based on their email
+  // Query Categories for the user based on their email
   const { data, error } = await supabase
     .from("Categories")
     .select("id, userEmail, categoryName") // Select the desired columns
-    .eq("userEmail", email); // Filter categories by user email
+    .eq("userEmail", email); // Filter Categories by user email
 
   if (error) {
-    console.error("Error fetching categories:", error);
     return []; // Return an empty array on error
   }
 
-  return data; // Return the retrieved categories
+  return data; // Return the retrieved Categories
 }
 
 export async function insertCategory(categoryName, userEmail) {
@@ -42,7 +41,6 @@ export async function editCategory(
 }
 
 export async function deleteCategory(categoryName, userEmail) {
-  console.log("Deleting category:", categoryName, "for user:", userEmail); // Log for debugging
   const { error } = await supabase
     .from("Categories")
     .delete()

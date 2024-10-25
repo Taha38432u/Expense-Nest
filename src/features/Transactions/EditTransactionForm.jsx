@@ -2,12 +2,12 @@ import { useForm } from "react-hook-form";
 import { useLocation, useNavigate, useParams } from "react-router-dom"; // Import useLocation to get state
 import Button from "../../ui/Button.jsx";
 import FormRow from "../../ui/FormRow.jsx";
-import useUser from "../authentication/useUser.js";
-import useCategories from "../categories/useCategories.js";
+import useUser from "../Authentication/useUser.js";
+import useCategories from "../Categories/useCategories.js";
 import Loading from "../../ui/Loading.jsx";
 import useEditTransaction from "./useEditTransaction.js";
-import useBudgets from "../budget/useBudgets.js";
-import useUpdateBudgetWithTransaction from "../budget/useUpdateBudgetOnTransaction.js";
+import useBudgets from "../Budget/useBudgets.js";
+import useUpdateBudgetWithTransaction from "../Budget/useUpdateBudgetOnTransaction.js";
 
 function EditTransaction() {
   const { user } = useUser();
@@ -112,7 +112,7 @@ function EditTransaction() {
       budgetId: Number(budgetId),
     });
 
-    // Update the budget's spentAmount with the adjusted amount
+    // Update the Budget's spentAmount with the adjusted amount
     await updateBudget({
       id: Number(budgetId),
       spentAmount: updatedSpentAmount,
@@ -185,7 +185,7 @@ function EditTransaction() {
             <select
               className="input"
               {...register("budgetId", {
-                required: "Please select a budget",
+                required: "Please select a Budget",
               })}
             >
               <option value="null">None</option>

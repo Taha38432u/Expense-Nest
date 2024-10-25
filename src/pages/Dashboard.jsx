@@ -1,5 +1,7 @@
+import DashboardComponent from "../features/Dashboard/Dashboard.jsx";
+
 function Dashboard() {
-  return <div></div>;
+  return <DashboardComponent />;
 }
 
 export default Dashboard;

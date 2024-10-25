@@ -19,7 +19,7 @@ function ExpenseSectionNav() {
   return (
     <li>
       <LinkContainer
-        // to="/transactions/add"
+        // to="/Transactions/add"
         onLinkClick={() => {
           setShowTransactions((prev) => !prev);
           setActiveLink("transactions");
@@ -35,7 +35,7 @@ function ExpenseSectionNav() {
           <li className={"mt-4"}>
             <LinkContainer
               to="/transactions/add"
-              onLinkClick={() => handleSubLinkClick("transactions/add")}
+              onLinkClick={() => handleSubLinkClick("Transactions/add")}
               activeLink={activeLink}
               compareValue="transactions/add"
             >
@@ -47,7 +47,7 @@ function ExpenseSectionNav() {
           <li>
             <LinkContainer
               to="/transactions/edit"
-              onLinkClick={() => handleSubLinkClick("transactions/edit")}
+              onLinkClick={() => handleSubLinkClick("Transactions/edit")}
               activeLink={activeLink}
               compareValue="transactions/edit"
             >
@@ -59,7 +59,7 @@ function ExpenseSectionNav() {
           <li>
             <LinkContainer
               to="/transactions/show"
-              onLinkClick={() => handleSubLinkClick("transactions/show")}
+              onLinkClick={() => handleSubLinkClick("Transactions/show")}
               activeLink={activeLink}
               compareValue="transactions/show"
             >

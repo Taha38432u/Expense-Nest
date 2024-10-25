@@ -1,5 +1,14 @@
+import MainHeading from "../ui/MainHeading.jsx";
+import { Outlet } from "react-router-dom";
+import GetUserOptions from "../features/filter/GetUserOptions.jsx";
+
 function Filter() {
-  return <div></div>;
+  return (
+    <>
+      <MainHeading content={"Filter Transactions"} />
+      <GetUserOptions />
+    </>
+  );
 }
 
 export default Filter;

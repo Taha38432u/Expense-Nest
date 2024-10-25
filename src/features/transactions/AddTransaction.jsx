@@ -3,25 +3,69 @@ import Button from "../../ui/Button.jsx";
 import FormRow from "../../ui/FormRow.jsx";
 import useUser from "../authentication/useUser.js";
 import useCategories from "../categories/useCategories.js";
-import Loading from "../../ui/Loading.jsx";
-import useNewTransaction from "./useInsertTransaction.js"; // Adjust the import path as necessary
+import useNewTransaction from "./useInsertTransaction.js";
+import useBudgets from "../budget/useBudgets.js"; // Assuming this is your custom hook
+import Spinner from "../../ui/Spinner.jsx";
+import useUpdateBudgetWithTransaction from "../budget/useUpdateBudgetOnTransaction.js"; // Adjust the import path as necessary
 
 function AddTransaction() {
   const { user } = useUser();
   const { email } = user.user_metadata;
-  const { isLoading, categories } = useCategories(email); // Fetch categories
+  const { isLoading: isLoadingCategories, categories } = useCategories(email); // Fetch categories
   const { register, handleSubmit, formState } = useForm();
   const { errors } = formState;
   const { insertTransaction, isInserting } = useNewTransaction(); // Insert transaction logic
+  const { budgets, isLoading: isLoadingBudgets } = useBudgets(email);
+  const { updateBudget } = useUpdateBudgetWithTransaction();
 
-  if (isLoading) return <Loading />;
+  if (isLoadingCategories || isLoadingBudgets) return <Spinner />;
 
-  async function onSubmit({ categoryName, amount, description }) {
-    // Insert the transaction
-    insertTransaction({
+  const currentDate = new Date();
+
+  const activeBudgets = budgets.filter((budget) => {
+    const startDate = new Date(budget.startDate); // Assuming the budget has a startDate field
+    const endDate = new Date(budget.endDate); // Assuming the budget has an endDate field
+
+    // Check if the budget is active, and the current date falls within the start and end dates
+    return (
+      budget.active === true &&
+      currentDate >= startDate &&
+      currentDate <= endDate
+    );
+  });
+  // Assuming isActive is a boolean indicating the budget's status
+
+  async function onSubmit({ categoryName, amount, description, budgetId }) {
+    if (budgetId === "none") {
+      await insertTransaction({
+        categoryName,
+        userEmail: email,
+        description,
+        amount: Number(amount),
+        budgetId: null, // Include the selected budgetId
+      });
+      return;
+    }
+    // Find the budget using find instead of filter
+    const selectedBudget = budgets.find(
+      (budget) => budget.id === Number(budgetId),
+    );
+
+    const spentAmount = selectedBudget.spentAmount + Number(amount);
+
+    // Insert the transaction, including the budgetId
+    await insertTransaction({
       categoryName,
-      amount: Number(amount),
+      userEmail: email,
       description,
+      amount: Number(amount),
+      budgetId: Number(budgetId), // Include the selected budgetId
+    });
+
+    // Update the budget with the new spent amount
+    await updateBudget({
+      id: budgetId,
+      spentAmount,
       userEmail: email,
     });
   }
@@ -35,7 +79,7 @@ function AddTransaction() {
 
         <form onSubmit={handleSubmit(onSubmit)}>
           {/* Select input for Category */}
-          <FormRow label="Category" error={errors?.categoryId?.message}>
+          <FormRow label="Category" error={errors?.categoryName?.message}>
             <select
               className="input"
               {...register("categoryName", {
@@ -84,6 +128,23 @@ function AddTransaction() {
                 },
               })}
             />
+          </FormRow>
+
+          {/* Select input for Budget */}
+          <FormRow label="Budget" error={errors?.budgetId?.message}>
+            <select
+              className="input"
+              {...register("budgetId", {
+                required: "Please select a budget",
+              })}
+            >
+              <option value="none">None</option>
+              {activeBudgets.map((budget) => (
+                <option key={budget.id} value={budget.id}>
+                  {budget.name} (Limit: ${budget.totalAmount})
+                </option>
+              ))}
+            </select>
           </FormRow>
 
           {/* Submit button */}

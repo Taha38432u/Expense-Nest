@@ -19,10 +19,10 @@ function ExpenseSectionNav() {
   return (
     <li>
       <LinkContainer
-        to="/transactions/add"
+        // to="/transactions/add"
         onLinkClick={() => {
           setShowTransactions((prev) => !prev);
-          setActiveLink("transactions/add");
+          setActiveLink("transactions");
         }} // Toggle subcategories
         activeLink={activeLink}
         compareValue="transactions"

@@ -16,10 +16,10 @@ function AccountSectionNav() {
   return (
     <li>
       <LinkContainer
-        to="/account/change-username"
+        // to="/account/change-username"
         onLinkClick={() => {
           setShowAccount((prev) => !prev);
-          setActiveLink("account/change-username");
+          setActiveLink("account");
         }} // Corrected
         activeLink={activeLink}
         compareValue="account"

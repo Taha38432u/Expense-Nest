@@ -1,6 +1,5 @@
 import Logo from "./Logo.jsx";
 import MainNav from "./MainNav.jsx";
-import { MainNavProvider } from "./MainNavContext.jsx";
 
 function Sidebar() {
   return (

@@ -32,6 +32,7 @@ function EditTransaction() {
             categoryName={transaction.categoryName}
             description={transaction.description}
             transactionDate={transaction.transactionDate}
+            budgetId={transaction.budgetId}
             isEdit={true} // If you want to enable edit functionality in the item
           />
         ))}

@@ -4,7 +4,7 @@ import MainHeading from "../ui/MainHeading.jsx";
 function Categories() {
   return (
     <>
-     <MainHeading content={"Categories"} />
+      <MainHeading content={"Categories"} />
       <Outlet />
     </>
   );

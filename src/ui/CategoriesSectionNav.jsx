@@ -19,10 +19,10 @@ function CategoriesSectionNav() {
   return (
     <li>
       <LinkContainer
-        to="/categories/add"
+        // to="/categories"
         onLinkClick={() => {
           setShowCategories((prev) => !prev);
-          setActiveLink("categories/add");
+          setActiveLink("categories");
         }} // Toggle subcategories
         activeLink={activeLink}
         compareValue="categories"

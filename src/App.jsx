@@ -27,6 +27,9 @@ import AddTransaction from "./features/transactions/AddTransaction.jsx";
 import EditTransaction from "./features/transactions/editTransaction.jsx";
 import ShowTransactions from "./features/transactions/showTransactions.jsx";
 import EditTransactionForm from "./features/transactions/EditTransactionForm.jsx";
+import AddBudget from "./features/budget/AddBudget.jsx";
+import EditBudget from "./features/budget/EditBudget.jsx";
+import EditBudgetForm from "./features/budget/EditBudgetForm.jsx";
 
 // Custom context providers
 
@@ -77,7 +80,11 @@ function App() {
                 <Route path={"show"} element={<ShowTransactions />} />
               </Route>
 
-              <Route path="budget" element={<Budget />} />
+              <Route path="budget" element={<Budget />}>
+                <Route path="add" element={<AddBudget />} />
+                <Route path="edit" element={<EditBudget />} />
+                <Route path={"edit/:budgetId"} element={<EditBudgetForm />} />
+              </Route>
               <Route path="filter" element={<Filter />} />
 
               {/* Account and nested routes for changing username and password */}

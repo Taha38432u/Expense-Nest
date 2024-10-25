@@ -7,12 +7,26 @@ export default function useEditTransaction() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { mutate: editTransaction, isPending: isUpdating } = useMutation({
-    mutationFn: ({ categoryName, userEmail, amount, description, id }) =>
-      editTransactionApi(categoryName, userEmail, amount, description, id),
+    mutationFn: ({
+      categoryName,
+      userEmail,
+      amount,
+      description,
+      id,
+      budgetId,
+    }) =>
+      editTransactionApi(
+        categoryName,
+        userEmail,
+        amount,
+        description,
+        id,
+        budgetId,
+      ),
     onSuccess: () => {
       toast.success(`Transaction updated successfully`);
       queryClient.invalidateQueries({
-        queryKey: [`transactions`],
+        queryKey: [`transactions`, "budgets"],
       });
       navigate(-1);
     },

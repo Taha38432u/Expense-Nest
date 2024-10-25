@@ -19,11 +19,11 @@ export async function insertTransaction(
   userEmail,
   description,
   amount,
+  budgetId,
 ) {
-  console.log(description);
   const { data, error } = await supabase
     .from("Transactions")
-    .insert([{ amount, description, categoryName, userEmail }])
+    .insert([{ amount, description, categoryName, userEmail, budgetId }])
     .select();
 
   if (error) {
@@ -38,10 +38,11 @@ export async function editTransaction(
   amount,
   description,
   id,
+  budgetId,
 ) {
   const { data, error } = await supabase
     .from("Transactions")
-    .update({ categoryName, userEmail, amount, description })
+    .update({ categoryName, userEmail, amount, description, budgetId })
     .eq("id", id) // First condition
     .eq("userEmail", userEmail) // Second condition
     .select();

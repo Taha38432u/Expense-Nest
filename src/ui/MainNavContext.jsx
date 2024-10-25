@@ -11,6 +11,7 @@ export function MainNavProvider({ children }) {
   const [showCategories, setShowCategories] = useState(false);
   const [showAccount, setShowAccount] = useState(false);
   const [showTransactions, setShowTransactions] = useState(false);
+  const [showBudgets, setShowBudgets] = useState(false);
   const [activeLink, setActiveLink] = useState("");
 
   const handleLinkClick = (link) => {
@@ -18,6 +19,7 @@ export function MainNavProvider({ children }) {
     setShowCategories(false);
     setShowAccount(false);
     setShowTransactions(false);
+    setShowBudgets(false);
   };
 
   const handleSubLinkClick = (link) => {
@@ -33,6 +35,8 @@ export function MainNavProvider({ children }) {
         setShowCategories,
         showAccount,
         setShowAccount,
+        showBudgets,
+        setShowBudgets,
         activeLink,
         setActiveLink,
         handleLinkClick,

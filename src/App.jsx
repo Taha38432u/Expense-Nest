@@ -58,7 +58,7 @@ function App() {
                 </ProtectedRoute>
               }
             >
-              <Route index element={<Navigate replace to="categories" />} />
+              <Route index element={<Navigate replace to="dashboard" />} />
 
               {/* Categories and its nested routes */}
               <Route path="categories" element={<Categories />}>

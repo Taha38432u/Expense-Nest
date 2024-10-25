@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import useSignUp from "./useSignUp.js";
 
 function SignupForm() {
-  const { register, handleSubmit, reset, formState, getValues } = useForm({
+  const { register, handleSubmit, formState, getValues } = useForm({
     defaultValues: {
       fullName: "Taha Rasheed", // Default full name
       email: "rasheedtaha111@gmail.com", // Default email

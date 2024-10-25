@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import useLogIn from "./useLogIn.js";
 
 function SignupForm() {
-  const { register, handleSubmit, reset, formState } = useForm();
+  const { register, handleSubmit, formState } = useForm();
   const { errors } = formState;
 
   const { login, isLoading } = useLogIn();

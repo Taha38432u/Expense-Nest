@@ -9,7 +9,6 @@
 - [Features](#features)
 - [Usage](#usage)
 - [Technologies](#technologies)
-- [License](#license)
 
 ---
 

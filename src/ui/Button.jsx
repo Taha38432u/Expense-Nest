@@ -5,7 +5,8 @@ function Button({
   type = "button-primary",
   to,
   disabled,
-  handleClick = () => {}, // Change default value to an empty function
+  handleClick = () => {},
+  className, // Change default value to an empty function
 }) {
   if (type === "link") {
     return (
@@ -24,7 +25,7 @@ function Button({
     return (
       <button
         disabled={disabled}
-        className="rounded bg-blue-600 px-4 py-2 font-semibold text-white transition duration-200 hover:bg-blue-500"
+        className="text-md rounded bg-blue-600 px-2 py-2 font-semibold text-white transition duration-200 hover:bg-blue-500 sm:px-4"
         onClick={handleClick}
       >
         {content} {/* Updated to show dynamic content */}
@@ -36,7 +37,7 @@ function Button({
     return (
       <button
         disabled={disabled}
-        className="rounded bg-red-600 px-4 py-2 font-semibold text-white transition duration-200 hover:bg-red-500"
+        className="rounded bg-red-600 px-2 py-2 font-semibold text-white transition duration-200 hover:bg-red-500 sm:px-4"
         onClick={handleClick}
       >
         {content} {/* Updated to show dynamic content */}
@@ -51,7 +52,7 @@ function Button({
         disabled
           ? "cursor-not-allowed bg-gray-400" // Disabled styles for button
           : ` ${type === "button-primary-red" ? "focus:ring-opacity-75` bg-red-600 hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-red-400" : "bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75"}`
-      }`}
+      } ${className}`}
       onClick={handleClick} // Ensure onClick is assigned here as well
     >
       {content}

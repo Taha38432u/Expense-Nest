@@ -3,6 +3,7 @@ import TransactionFilter from "./TransactionFilter";
 import TransactionList from "./TransactionList";
 import BudgetSummary from "./BudgetSummary";
 import ActionButtons from "./ActionButtons";
+import { formattedAmount } from "../Filter/GetUserOptions";
 
 function BudgetItem({
   budget,
@@ -116,7 +117,7 @@ function BudgetItem({
       key={budget.id}
       className="mb-4 rounded-lg bg-gray-800 p-4 text-white shadow-md"
     >
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col">
         <div>
           <h3 className="text-xl font-semibold">{budget.name}</h3>
           <p className="text-sm text-gray-400">
@@ -124,9 +125,9 @@ function BudgetItem({
             <span
               className={`${budget.spentAmount > budget.totalAmount ? "text-red-500" : ""}`}
             >
-              ${budget.spentAmount}{" "}
+              {formattedAmount(budget.spentAmount)}{" "}
             </span>
-            / ${budget.totalAmount}
+            / ${formattedAmount(budget.totalAmount)}
           </p>
           {budget.spentAmount > budget.totalAmount ? (
             <p className={"text-sm text-red-500"}>

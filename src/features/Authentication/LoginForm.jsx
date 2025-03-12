@@ -16,7 +16,7 @@ function SignupForm() {
   function onError(error) {}
 
   return (
-    <div className="flex min-h-screen items-center justify-center p-12">
+    <div className="flex items-center justify-center p-12">
       <div className="w-full max-w-3xl rounded-lg bg-gray-800 p-8 shadow-lg">
         <p className="mb-8 text-center text-lg font-semibold text-gray-100">
           Please Log in your account

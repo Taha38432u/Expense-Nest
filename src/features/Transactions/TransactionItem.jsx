@@ -3,9 +3,9 @@ import Button from "../../ui/Button.jsx";
 import { useNavigate } from "react-router-dom";
 import triggerDeleteToast from "../../ui/TriggerDeleteToast.jsx";
 import { GetUserDetails } from "../Authentication/useDetailsUser.js";
-import useDeleteTransaction from "./useDeleteTransaction.js"; // Import useNavigate
-import useBudgets from "../Budget/useBudgets.js"; // Import useBudgets to update the Budget
-import useUpdateBudgetWithTransaction from "../Budget/useUpdateBudgetOnTransaction.js"; // Import useUpdateBudgetWithTransaction hook
+import useDeleteTransaction from "./useDeleteTransaction.js"; 
+import useBudgets from "../Budget/useBudgets.js"; 
+import useUpdateBudgetWithTransaction from "../Budget/useUpdateBudgetOnTransaction.js"; 
 
 function TransactionItem({
   id,
@@ -15,23 +15,29 @@ function TransactionItem({
   transactionDate,
   isEdit,
   filtered = false,
-  budgetId, // Add budgetId if needed to identify the Budget related to the transaction
+  budgetId, 
 }) {
-  const navigate = useNavigate(); // Hook for navigation
+  const navigate = useNavigate(); 
   const { deleteTransaction, isDeleting } = useDeleteTransaction();
   const { email: userEmail } = GetUserDetails();
-  const { budgets } = useBudgets(userEmail); // Get budgets associated with the user
-  const { updateBudget } = useUpdateBudgetWithTransaction(); // Hook to update the Budget
+  const { budgets } = useBudgets(userEmail); 
+  const { updateBudget } = useUpdateBudgetWithTransaction(); 
 
-  // Format the date into a readable format
-  const formattedDate = new Date(transactionDate).toLocaleDateString("en-US", {
+  // Format amount in PKR
+   const formattedAmount = new Intl.NumberFormat("en-PK", {
+    style: "currency",
+    currency: "PKR",
+    minimumFractionDigits: 0, // Remove decimals (₨1,234 instead of ₨1,234.00)
+  }).format(amount);
+
+  // Format date into a readable format
+  const formattedDate = new Date(transactionDate).toLocaleDateString("en-PK", {
     year: "numeric",
     month: "long",
     day: "numeric",
   });
 
   const handleEditClick = () => {
-    // Navigate to the edit page, passing the transaction id via route
     navigate(`/transactions/edit/${id}`, {
       state: {
         amount,
@@ -44,31 +50,22 @@ function TransactionItem({
   };
 
   const handleDeleteClick = () => {
-    // Find the corresponding Budget by budgetId (assuming each transaction is linked to a Budget)
     const selectedBudget = budgets.find((budget) => budget.id === budgetId);
+    if (!selectedBudget) return; 
 
-    if (!selectedBudget) return; // If no Budget is found, exit
-
-    // Define the updateBudget logic: subtract the transaction amount from spentAmount
     const updateBudgetSpentAmount = async () => {
       const updatedSpentAmount = selectedBudget.spentAmount - amount;
-
-      // Update the Budget's spentAmount after deleting the transaction
       await updateBudget({
         id: budgetId,
         spentAmount: updatedSpentAmount,
-        userEmail, // Make sure to pass the userEmail to the update function
+        userEmail, 
       });
     };
 
-    // Trigger the deleteTransaction and update the Budget spentAmount
     triggerDeleteToast(
-      "", // Optional message for the toast
+      "", 
       async () => {
-        // First delete the transaction
         await deleteTransaction({ userEmail, id });
-
-        // Then update the Budget
         await updateBudgetSpentAmount();
       },
       isDeleting,
@@ -80,10 +77,10 @@ function TransactionItem({
     <li
       className={`group relative transform rounded-lg ${
         !filtered ? "bg-gray-800" : "bg-gray-900"
-      } p-6 shadow-lg transition-all duration-300 hover:-translate-y-2 hover:shadow-xl`}
+      } p-5 shadow-lg transition-all duration-300 hover:-translate-y-2 hover:shadow-xl`}
     >
       <div>
-        <p className="text-lg font-semibold text-white">${amount}</p>
+        <p className="text-lg font-semibold text-white">{formattedAmount}</p>
         <p className="text-md text-gray-400">{categoryName}</p>
         <p className="text-sm text-gray-500">{description}</p>
         <p className="text-sm text-gray-500">Date: {formattedDate}</p>
@@ -94,16 +91,16 @@ function TransactionItem({
       </div>
 
       {isEdit && (
-        <div className="mt-4 flex space-x-2">
+        <div className="mt-4 flex items-center justify-start gap-2">
           <Button
             content="Edit"
             type="button-edit"
-            handleClick={handleEditClick} // Navigate to edit page
+            handleClick={handleEditClick} 
           />
           <Button
             content="Delete"
             type="button-delete"
-            handleClick={handleDeleteClick} // Delete functionality
+            handleClick={handleDeleteClick} 
           />
         </div>
       )}

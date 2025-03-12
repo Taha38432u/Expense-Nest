@@ -14,6 +14,7 @@ function ExpenseSectionNav() {
     handleSubLinkClick,
     setShowTransactions,
     setActiveLink,
+    isOpen,
   } = useMainNav();
 
   return (
@@ -28,43 +29,45 @@ function ExpenseSectionNav() {
         compareValue="transactions"
       >
         <HiCreditCard className="h-6 w-6 text-gray-400 transition-all duration-300" />
-        <span>Transactions</span>
+        <span className={`${!isOpen && "hidden"}`}>Transactions</span>
       </LinkContainer>
       {showTransactions && (
-        <ul className="ml-8 flex flex-col gap-2">
-          <li className={"mt-4"}>
+        <ul className="ml-8 flex flex-col gap-2 border-l-2 border-gray-500 pl-3">
+          <li className="mt-4">
             <LinkContainer
               to="/transactions/add"
-              onLinkClick={() => handleSubLinkClick("Transactions/add")}
+              onLinkClick={() => handleSubLinkClick("transactions/add")}
               activeLink={activeLink}
               compareValue="transactions/add"
             >
               <HiPlusCircle className="h-6 w-6 text-gray-400 transition-all duration-300" />
-              <span>Add Transaction</span>
+              <span className={`${!isOpen && "hidden"}`}>Add Transaction</span>
             </LinkContainer>
           </li>
 
           <li>
             <LinkContainer
               to="/transactions/edit"
-              onLinkClick={() => handleSubLinkClick("Transactions/edit")}
+              onLinkClick={() => handleSubLinkClick("transactions/edit")}
               activeLink={activeLink}
               compareValue="transactions/edit"
             >
               <HiPencilSquare className="h-6 w-6 text-gray-400 transition-all duration-300" />
-              <span>Edit Transaction</span>
+              <span className={`${!isOpen && "hidden"}`}>Edit Transaction</span>
             </LinkContainer>
           </li>
 
           <li>
             <LinkContainer
               to="/transactions/show"
-              onLinkClick={() => handleSubLinkClick("Transactions/show")}
+              onLinkClick={() => handleSubLinkClick("transactions/show")}
               activeLink={activeLink}
               compareValue="transactions/show"
             >
               <HiRectangleStack className="h-6 w-6 text-gray-400 transition-all duration-300" />
-              <span>Show Transactions</span>
+              <span className={`${!isOpen && "hidden"}`}>
+                Show Transactions
+              </span>
             </LinkContainer>
           </li>
         </ul>

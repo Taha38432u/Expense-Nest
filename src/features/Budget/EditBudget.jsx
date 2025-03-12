@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { GetUserDetails } from "../Authentication/useDetailsUser";
 import useBudgets from ".//useBudgets.js"; // Assuming you have a useBudgets hook to fetch budgets
 import Spinner from "../../ui/Spinner";

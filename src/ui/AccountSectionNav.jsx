@@ -11,6 +11,7 @@ function AccountSectionNav() {
     showAccount,
     setShowAccount,
     setActiveLink,
+    isOpen,
   } = useMainNav();
   const { isLoading, logout } = useLogout();
   return (
@@ -25,11 +26,11 @@ function AccountSectionNav() {
         compareValue="account"
       >
         <HiUsers className="h-6 w-6 text-gray-400 transition-all duration-300" />
-        <span>Account</span>
+        <span className={`${!isOpen && "hidden"}`}>Account</span>
       </LinkContainer>
 
       {showAccount && (
-        <ul className="ml-8 flex flex-col gap-2">
+        <ul className="ml-8 flex flex-col gap-2 border-l-2 border-gray-500 pl-3">
           <li className="mt-4">
             <LinkContainer
               to="/account/change-username"
@@ -38,7 +39,7 @@ function AccountSectionNav() {
               compareValue="account/change-username"
             >
               <HiUserCircle className="h-6 w-6 text-gray-400 transition-all duration-300" />
-              <span>Change Username</span>
+              <span className={`${!isOpen && "hidden"}`}>Change Username</span>
             </LinkContainer>
           </li>
           <li>
@@ -49,7 +50,7 @@ function AccountSectionNav() {
               compareValue="account/change-password"
             >
               <HiLockClosed className="h-6 w-6 text-gray-400 transition-all duration-300" />
-              <span>Change Password</span>
+              <span className={`${!isOpen && "hidden"}`}>Change Password</span>
             </LinkContainer>
           </li>
           <li>
@@ -63,7 +64,7 @@ function AccountSectionNav() {
               disabled={isLoading}
             >
               <HiLogout className="h-6 w-6 text-gray-400 transition-all duration-300" />
-              <span>Log Out</span>
+              <span className={`${!isOpen && "hidden"}`}>Log Out</span>
             </button>
           </li>
         </ul>

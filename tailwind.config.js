@@ -6,16 +6,6 @@ export default {
       fontFamily: {
         sans: ["Bai Jamjuree", "sans-serif"],
       },
-      keyframes: {
-        rotate: {
-          to: {
-            transform: "rotate(1turn)",
-          },
-        },
-      },
-      animation: {
-        rotate: "rotate 1.5s infinite linear",
-      },
     },
   },
   plugins: [],

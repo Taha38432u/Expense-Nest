@@ -25,7 +25,7 @@ function AddCategory() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center p-8">
+    <div className="flex items-center justify-center p-8">
       <div className="w-full max-w-xl rounded-lg bg-gray-800 p-8 shadow-md">
         <h2 className="mb-6 text-center text-2xl font-semibold text-gray-100">
           Add Category

@@ -18,7 +18,7 @@ function ShowCategories() {
   }
 
   return (
-    <div className="min-h-screen p-8">
+    <div className="p-8">
       <h1 className="mb-8 mt-8 text-center text-3xl font-bold text-white">
         All Categories
       </h1>

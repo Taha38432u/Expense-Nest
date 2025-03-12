@@ -4,6 +4,15 @@ import Spinner from "../../ui/Spinner";
 import TransactionItem from "../Transactions/TransactionItem.jsx";
 import { GetUserDetails } from "../Authentication/useDetailsUser";
 
+export function formattedAmount(amount) {
+  // Format amount in PKR
+  return new Intl.NumberFormat("en-PK", {
+    style: "currency",
+    currency: "PKR",
+    minimumFractionDigits: 0, // Remove decimals (₨1,234 instead of ₨1,234.00)
+  }).format(amount);
+}
+
 function GetUserOptions() {
   const { email } = GetUserDetails();
   const { transactions, isLoading } = useTransactions(email);
@@ -95,8 +104,8 @@ function GetUserOptions() {
     calculateSummary();
 
   return (
-    <div className="min-h-screen bg-gray-900 p-8 text-gray-300">
-      <h1 className="mb-8 mt-8 text-center text-4xl font-bold text-indigo-300">
+    <div className="min-h-screen bg-gray-900 text-gray-300">
+      <h1 className="mb-8 mt-8 text-center text-2xl font-bold text-indigo-300 md:text-4xl">
         Manage Your Transactions
       </h1>
 
@@ -194,7 +203,7 @@ function GetUserOptions() {
 
         {/* Total Amount */}
         <p className="mb-2">
-          <strong>Total Filtered Amount:</strong> ${totalAmount.toFixed(2)}
+          <strong>Total Filtered Amount:</strong> {formattedAmount(totalAmount)}
         </p>
 
         {/* Category Counts */}
@@ -204,7 +213,11 @@ function GetUserOptions() {
           </h3>
           {Object.entries(categoryCounts).map(([category, count]) => (
             <p key={category} className="text-md">
-              {category}: {count} transaction{count > 1 ? "s" : ""}
+              <span className="font-extrabold text-slate-950">
+                {" "}
+                {category}:{" "}
+              </span>{" "}
+              {count}
             </p>
           ))}
         </div>

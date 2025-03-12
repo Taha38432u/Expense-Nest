@@ -7,7 +7,7 @@ export async function getBudgets({ email }) {
     .eq("userEmail", email); // Filter Categories by user email
 
   if (error) {
-    console.error("Error fetching Categories:", error);
+    // console.error("Error fetching Categories:", error);
     return []; // Return an empty array on error
   }
 

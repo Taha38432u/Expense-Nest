@@ -3,7 +3,7 @@ import { HiFunnel } from "react-icons/hi2";
 import { useMainNav } from "./MainNavContext.jsx";
 
 function FilterSectionNav() {
-  const { handleLinkClick, activeLink } = useMainNav();
+  const { handleLinkClick, activeLink, isOpen } = useMainNav();
   return (
     <li>
       <LinkContainer
@@ -13,7 +13,7 @@ function FilterSectionNav() {
         compareValue="filter"
       >
         <HiFunnel className="h-6 w-6 text-gray-400 transition-all duration-300" />
-        <span>Filter</span>
+        <span className={`${!isOpen && "hidden"}`}>Filter</span>
       </LinkContainer>
     </li>
   );

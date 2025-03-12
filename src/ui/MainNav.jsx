@@ -8,7 +8,7 @@ import BudgetSectionNav from "./BudgetSectionNav.jsx";
 function MainNav() {
   return (
     <nav>
-      <ul className="mb-32 flex flex-col gap-3">
+      <ul className="flex flex-col gap-3">
         <HomeSectionNav />
         <ExpenseSectionNav />
         <CategoriesSectionNav />

@@ -13,6 +13,7 @@ export function MainNavProvider({ children }) {
   const [showTransactions, setShowTransactions] = useState(false);
   const [showBudgets, setShowBudgets] = useState(false);
   const [activeLink, setActiveLink] = useState("");
+  const [isOpen, setOpen] = useState(true);
 
   const handleLinkClick = (link) => {
     setActiveLink(link);
@@ -41,6 +42,8 @@ export function MainNavProvider({ children }) {
         setActiveLink,
         handleLinkClick,
         handleSubLinkClick,
+        isOpen,
+        setOpen,
       }}
     >
       {children}

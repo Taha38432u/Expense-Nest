@@ -35,7 +35,7 @@ export default [
         "warn",
         { allowConstantExport: true },
       ],
-      "prettier/prettier": "error", // Ensure Prettier errors are shown as ESLint errors
+      // "prettier/prettier": "error", // Ensure Prettier errors are shown as ESLint errors
       "no-console": "warn", // Warns about console statements
       eqeqeq: "error", // Enforces the use of === and !==
       "no-unused-vars": ["warn", { argsIgnorePattern: "^_" }], // Warns about unused variables

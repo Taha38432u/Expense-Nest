@@ -37,14 +37,14 @@ function DashboardComponent() {
 
   return (
     <div className="min-h-screen space-y-10 bg-gray-900 p-10 text-gray-100">
-      <h1 className="mb-4 text-center text-4xl font-extrabold text-blue-400">
+      <h1 className="mb-4 text-center text-2xl font-extrabold text-blue-400 md:text-4xl">
         Welcome, {fullName}
       </h1>
 
       {/* User Info Section */}
       <Section title="User Information">
         <Card
-          icon={<FaUserCircle size={48} />}
+          icon={<FaUserCircle size={38} />}
           label="User"
           value={fullName}
           bgColor="bg-blue-700"
@@ -55,19 +55,19 @@ function DashboardComponent() {
       <Section title="Transaction Summary">
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           <Card
-            icon={<FaMoneyCheckAlt size={48} />}
+            icon={<FaMoneyCheckAlt size={38} />}
             label="Total Transactions"
             value={totalTransactions}
             bgColor="bg-green-600"
           />
           <Card
-            icon={<MdCategory size={48} />}
+            icon={<MdCategory size={38} />}
             label="Total Categories"
             value={totalCategories}
             bgColor="bg-purple-600"
           />
           <Card
-            icon={<FaWallet size={48} />}
+            icon={<FaWallet size={38} />}
             label="Total Budgets"
             value={totalBudgets}
             bgColor="bg-yellow-600"
@@ -78,7 +78,7 @@ function DashboardComponent() {
       {/* Financial Overview Section */}
       <Section title="Financial Overview">
         <Card
-          icon={<MdAttachMoney size={48} />}
+          icon={<MdAttachMoney size={38} />}
           label="Total Budget Amount"
           value={`$${totalAmount.toLocaleString()}`}
           bgColor="bg-teal-600"
@@ -91,8 +91,8 @@ function DashboardComponent() {
           {transactionsPerCategory.map(({ name, count }) => (
             <Card
               key={name}
-              icon={<MdLeaderboard size={48} />}
-              label={`Transactions in ${name}`}
+              icon={<MdLeaderboard size={38} />}
+              label={`${name}`}
               value={count}
               bgColor="bg-red-600"
             />
@@ -106,8 +106,10 @@ function DashboardComponent() {
 // Section Component to group related cards with headings and spacing
 function Section({ title, children }) {
   return (
-    <section className="space-y-4">
-      <h2 className="mb-2 text-2xl font-bold text-blue-200">{title}</h2>
+    <section className="space-y-4 px-2">
+      <h2 className="mb-2 text-xl font-bold text-blue-200 md:text-2xl">
+        {title}
+      </h2>
       <div className="space-y-4">{children}</div>
     </section>
   );
@@ -117,13 +119,13 @@ function Section({ title, children }) {
 function Card({ icon, label, value, bgColor }) {
   return (
     <div
-      className={`${bgColor} transform rounded-lg p-6 text-gray-100 shadow-lg transition duration-300 hover:scale-105 hover:shadow-xl`}
+      className={`${bgColor} transform rounded-lg p-4 text-gray-100 shadow-lg transition duration-300 hover:scale-105 hover:shadow-xl md:p-6`}
     >
-      <div className="flex items-center space-x-4">
+      <div className="flex flex-col items-start">
         <div className="text-white">{icon}</div>
-        <div>
-          <h3 className="text-lg font-semibold">{label}</h3>
-          <p className="text-3xl font-bold">{value}</p>
+        <div className="flex flex-col items-start gap-2">
+          <h3 className="text-md font-semibold md:text-lg">{label}</h3>
+          <p className="text-lg font-bold md:text-3xl">{value}</p>
         </div>
       </div>
     </div>

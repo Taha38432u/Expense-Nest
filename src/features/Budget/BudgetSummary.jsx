@@ -3,6 +3,7 @@ import {
   FaCalendarAlt,
   FaClipboardList,
 } from "react-icons/fa";
+import { formattedAmount } from "../Filter/GetUserOptions";
 
 function BudgetSummary({
   budget,
@@ -26,15 +27,15 @@ function BudgetSummary({
         <div className="flex items-center">
           <FaMoneyBillWave className="mr-2 text-indigo-300" />
           <p>
-            <strong className="text-indigo-300">Total Budget:</strong> $
-            {budget.totalAmount}
+            <strong className="text-indigo-300">Total Budget:</strong>{" "}
+            {formattedAmount(budget.totalAmount)}
           </p>
         </div>
         <div className="flex items-center">
           <FaMoneyBillWave className="mr-2 text-indigo-300" />
           <p>
             <strong className="text-indigo-300">Total Spent (Filtered):</strong>{" "}
-            ${totalAmount.toFixed(2)}
+            {formattedAmount(budget.spentAmount)}
           </p>
         </div>
         <div className="flex items-center">
@@ -79,7 +80,7 @@ function BudgetSummary({
             <strong className="mr-1 text-indigo-300">
               Total Filtered Amount:
             </strong>{" "}
-            ${totalAmount.toFixed(2)}
+            {formattedAmount(totalAmount)}
           </p>
           <div className="mt-2">
             <strong className="text-lg text-indigo-300">

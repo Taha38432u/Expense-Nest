@@ -36,6 +36,8 @@ function EditTransaction() {
   const activeBudgets = budgets.filter((budget) => budget.active === true);
 
   async function onSubmit({ categoryName, amount, description, budgetId }) {
+    console.log("New Budget Id: ", budgetId);
+    console.log("Old Budget Id", oldBudgetId);
     let selectedBudget;
     if (budgetId !== "null") {
       selectedBudget = budgets.find((budget) => budget.id === Number(budgetId));
@@ -109,7 +111,7 @@ function EditTransaction() {
       amount: newAmount,
       description,
       id: transactionId, // Use the transactionId to update the existing one
-      budgetId: Number(budgetId),
+      budgetId: budgetId === null ? null : Number(budgetId),
     });
 
     // Update the Budget's spentAmount with the adjusted amount

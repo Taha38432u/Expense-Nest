@@ -86,13 +86,26 @@ export async function toggleBudgetActive(id, active, userEmail) {
 }
 
 export async function deleteBudget(id, userEmail) {
-  const { data, error } = await supabase
+  // Start a transaction-like process
+  const { error: updateError } = await supabase
+    .from("Transactions")
+    .update({ budgetId: null })
+    .eq("budgetId", id)
+    .eq("userEmail", userEmail);
+
+  if (updateError) {
+    console.error("Error updating transactions:", updateError.message);
+    return;
+  }
+
+  // Now delete the budget
+  const { error: deleteError } = await supabase
     .from("Budget")
     .delete()
     .eq("id", id)
     .eq("userEmail", userEmail);
 
-  if (error) {
-    console.error(error.message);
+  if (deleteError) {
+    console.error("Error deleting budget:", deleteError.message);
   }
 }

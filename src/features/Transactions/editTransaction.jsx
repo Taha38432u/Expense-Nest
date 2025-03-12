@@ -9,7 +9,7 @@ function EditTransaction() {
   const { email } = GetUserDetails();
   const { transactions, isLoading } = useTransactions(email);
 
-  const [sortOrder, setSortOrder] = useState("desc");
+  const [sortOrder, setSortOrder] = useState("asc");
   const [sortedTransactions, setSortedTransactions] = useState([]);
 
   useEffect(() => {

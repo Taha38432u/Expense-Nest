@@ -3,9 +3,9 @@ import Button from "../../ui/Button.jsx";
 import { useNavigate } from "react-router-dom";
 import triggerDeleteToast from "../../ui/TriggerDeleteToast.jsx";
 import { GetUserDetails } from "../Authentication/useDetailsUser.js";
-import useDeleteTransaction from "./useDeleteTransaction.js"; 
-import useBudgets from "../Budget/useBudgets.js"; 
-import useUpdateBudgetWithTransaction from "../Budget/useUpdateBudgetOnTransaction.js"; 
+import useDeleteTransaction from "./useDeleteTransaction.js";
+import useBudgets from "../Budget/useBudgets.js";
+import useUpdateBudgetWithTransaction from "../Budget/useUpdateBudgetOnTransaction.js";
 
 function TransactionItem({
   id,
@@ -15,16 +15,16 @@ function TransactionItem({
   transactionDate,
   isEdit,
   filtered = false,
-  budgetId, 
+  budgetId,
 }) {
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
   const { deleteTransaction, isDeleting } = useDeleteTransaction();
   const { email: userEmail } = GetUserDetails();
-  const { budgets } = useBudgets(userEmail); 
-  const { updateBudget } = useUpdateBudgetWithTransaction(); 
+  const { budgets } = useBudgets(userEmail);
+  const { updateBudget } = useUpdateBudgetWithTransaction();
 
   // Format amount in PKR
-   const formattedAmount = new Intl.NumberFormat("en-PK", {
+  const formattedAmount = new Intl.NumberFormat("en-PK", {
     style: "currency",
     currency: "PKR",
     minimumFractionDigits: 0, // Remove decimals (₨1,234 instead of ₨1,234.00)
@@ -50,23 +50,35 @@ function TransactionItem({
   };
 
   const handleDeleteClick = () => {
-    const selectedBudget = budgets.find((budget) => budget.id === budgetId);
-    if (!selectedBudget) return; 
+    if (budgetId !== null) {
+      const selectedBudget = budgets.find((budget) => budget.id === budgetId);
+      if (!selectedBudget) return;
 
-    const updateBudgetSpentAmount = async () => {
-      const updatedSpentAmount = selectedBudget.spentAmount - amount;
-      await updateBudget({
-        id: budgetId,
-        spentAmount: updatedSpentAmount,
-        userEmail, 
-      });
-    };
+      const updateBudgetSpentAmount = async () => {
+        const updatedSpentAmount = selectedBudget.spentAmount - amount;
+        await updateBudget({
+          id: budgetId,
+          spentAmount: updatedSpentAmount,
+          userEmail,
+        });
+      };
+
+      triggerDeleteToast(
+        "",
+        async () => {
+          await deleteTransaction({ userEmail, id });
+          await updateBudgetSpentAmount();
+        },
+        isDeleting,
+        "transaction",
+      );
+    }
 
     triggerDeleteToast(
-      "", 
+      "",
       async () => {
         await deleteTransaction({ userEmail, id });
-        await updateBudgetSpentAmount();
+        // await updateBudgetSpentAmount();
       },
       isDeleting,
       "transaction",
@@ -95,12 +107,12 @@ function TransactionItem({
           <Button
             content="Edit"
             type="button-edit"
-            handleClick={handleEditClick} 
+            handleClick={handleEditClick}
           />
           <Button
             content="Delete"
             type="button-delete"
-            handleClick={handleDeleteClick} 
+            handleClick={handleDeleteClick}
           />
         </div>
       )}

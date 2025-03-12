@@ -28,7 +28,7 @@ export default function useEditTransaction() {
       queryClient.invalidateQueries({
         queryKey: [`transactions`, "budgets"],
       });
-      navigate(-1);
+      // navigate(-1);
     },
     onError: () => {
       toast.error(`Transaction cannot be updated due to an error`);

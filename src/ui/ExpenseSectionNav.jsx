@@ -32,7 +32,7 @@ function ExpenseSectionNav() {
         <span className={`${!isOpen && "hidden"}`}>Transactions</span>
       </LinkContainer>
       {showTransactions && (
-        <ul className="ml-8 flex flex-col gap-2 border-l-2 border-gray-500 pl-3">
+        <ul className="ml-4 flex flex-col gap-2 border-l-2 border-gray-500">
           <li className="mt-4">
             <LinkContainer
               to="/transactions/add"

@@ -36,7 +36,7 @@ function DashboardComponent() {
   }));
 
   return (
-    <div className="min-h-screen space-y-10 bg-gray-900 p-10 text-gray-100">
+    <div className="min-h-screen space-y-10 bg-gray-900 text-gray-100">
       <h1 className="mb-4 text-center text-2xl font-extrabold text-blue-400 md:text-4xl">
         Welcome, {fullName}
       </h1>

@@ -127,7 +127,7 @@ function BudgetItem({
             >
               {formattedAmount(budget.spentAmount)}{" "}
             </span>
-            / ${formattedAmount(budget.totalAmount)}
+            / {formattedAmount(budget.totalAmount)}
           </p>
           {budget.spentAmount > budget.totalAmount ? (
             <p className={"text-sm text-red-500"}>

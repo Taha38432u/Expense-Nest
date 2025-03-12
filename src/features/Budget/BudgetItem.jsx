@@ -3,7 +3,7 @@ import TransactionFilter from "./TransactionFilter";
 import TransactionList from "./TransactionList";
 import BudgetSummary from "./BudgetSummary";
 import ActionButtons from "./ActionButtons";
-import { formattedAmount } from "../Filter/GetUserOptions";
+import {  formattedAmount } from "../Filter/GetUserOptions";
 
 function BudgetItem({
   budget,

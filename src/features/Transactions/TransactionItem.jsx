@@ -50,6 +50,7 @@ function TransactionItem({
   };
 
   const handleDeleteClick = () => {
+    let alreadyCalled = false;
     if (budgetId !== null) {
       const selectedBudget = budgets.find((budget) => budget.id === budgetId);
       if (!selectedBudget) return;
@@ -72,17 +73,20 @@ function TransactionItem({
         isDeleting,
         "transaction",
       );
+      alreadyCalled = true;
     }
 
-    triggerDeleteToast(
-      "",
-      async () => {
-        await deleteTransaction({ userEmail, id });
-        // await updateBudgetSpentAmount();
-      },
-      isDeleting,
-      "transaction",
-    );
+    if (alreadyCalled !== true) {
+      triggerDeleteToast(
+        "",
+        async () => {
+          await deleteTransaction({ userEmail, id });
+          // await updateBudgetSpentAmount();
+        },
+        isDeleting,
+        "transaction",
+      );
+    }
   };
 
   return (

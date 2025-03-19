@@ -6,13 +6,14 @@ import { insertTransaction as insertTransactionApi } from "../../services/apiTra
 export default function useNewTransaction() {
   const queryClient = useQueryClient();
   const { mutate: insertTransaction, isPending: isInserting } = useMutation({
-    mutationFn: ({ categoryName, userEmail, description, amount, budgetId }) =>
+    mutationFn: ({ categoryName, userEmail, description, amount, budgetId, transactionDate }) =>
       insertTransactionApi(
         categoryName,
         userEmail,
         description,
         amount,
         budgetId,
+        transactionDate
       ),
     onSuccess: () => {
       toast.success(`Transaction inserted successfully`);

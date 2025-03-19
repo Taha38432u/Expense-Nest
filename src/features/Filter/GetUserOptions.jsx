@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import useTransactions from "../Transactions/useTransactions.js";
 import Spinner from "../../ui/Spinner";
 import TransactionItem from "../Transactions/TransactionItem.jsx";
@@ -27,12 +27,6 @@ function GetUserOptions() {
 
   const [filteredTransactions, setFilteredTransactions] = useState([]);
 
-  useEffect(() => {
-    if (!isLoading) {
-      applyFilters();
-    }
-  }, [filters, transactions]);
-
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
     setFilters((prevFilters) => ({
@@ -53,7 +47,7 @@ function GetUserOptions() {
     });
   };
 
-  const applyFilters = () => {
+  const applyFilters = useCallback(() => {
     const { startDate, endDate, minAmount, maxAmount, selectedCategories } =
       filters;
 
@@ -72,14 +66,15 @@ function GetUserOptions() {
       return isWithinDateRange && isWithinAmountRange && isCategorySelected;
     });
 
-    setFilteredTransactions(filtered);
-  };
+    // setFilteredTransactions(filtered);
+    return filtered;
+  }, [filters, transactions]);
 
   const calculateSummary = () => {
     const categoryCounts = {};
     let totalAmount = 0;
 
-    filteredTransactions.forEach((transaction) => {
+    filteredTransactions?.forEach((transaction) => {
       totalAmount += transaction.amount;
       if (categoryCounts[transaction.categoryName]) {
         categoryCounts[transaction.categoryName]++;
@@ -97,6 +92,21 @@ function GetUserOptions() {
 
     return { mostFrequentCategory, totalAmount, categoryCounts };
   };
+
+  useEffect(() => {
+    if (!isLoading) {
+      const newFilteredTransactions = applyFilters();
+
+      // Avoid unnecessary state updates
+      setFilteredTransactions((prev) => {
+        if (JSON.stringify(prev) !== JSON.stringify(newFilteredTransactions)) {
+          return newFilteredTransactions;
+        }
+        return prev;
+      });
+    }
+  }, [applyFilters, isLoading]);
+  // ✅ Dependencies are now only filters and transactions
 
   if (isLoading) return <Spinner />;
 
@@ -228,7 +238,7 @@ function GetUserOptions() {
             Filtered Transactions
           </h3>
           <ul className="grid grid-cols-1 gap-4">
-            {filteredTransactions.map((transaction) => (
+            {filteredTransactions?.map((transaction) => (
               <TransactionItem
                 key={transaction.id}
                 id={transaction.id}

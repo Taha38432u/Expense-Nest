@@ -7,12 +7,18 @@ import useNewTransaction from "./useInsertTransaction.js";
 import useBudgets from "../Budget/useBudgets.js"; // Assuming this is your custom hook
 import Spinner from "../../ui/Spinner.jsx";
 import useUpdateBudgetWithTransaction from "../Budget/useUpdateBudgetOnTransaction.js"; // Adjust the import path as necessary
+import { formattedAmount } from "../Filter/GetUserOptions.jsx";
 
 function AddTransaction() {
   const { user } = useUser();
   const { email } = user.user_metadata;
   const { isLoading: isLoadingCategories, categories } = useCategories(email); // Fetch Categories
-  const { register, handleSubmit, formState } = useForm();
+  const { register, handleSubmit, formState } = useForm({
+    defaultValues: {
+      transactionDate: new Date().toISOString().split("T")[0],
+    },
+  });
+
   const { errors } = formState;
   const { insertTransaction, isInserting } = useNewTransaction(); // Insert transaction logic
   const { budgets, isLoading: isLoadingBudgets } = useBudgets(email);
@@ -23,19 +29,19 @@ function AddTransaction() {
   const currentDate = new Date();
 
   const activeBudgets = budgets.filter((budget) => {
-    const startDate = new Date(budget.startDate); // Assuming the Budget has a startDate field
-    const endDate = new Date(budget.endDate); // Assuming the Budget has an endDate field
+    // const startDate = new Date(budget.startDate);
+    const endDate = new Date(budget.endDate);
 
-    // Check if the Budget is active, and the current date falls within the start and end dates
-    return (
-      budget.active === true &&
-      currentDate >= startDate &&
-      currentDate <= endDate
-    );
+    return budget.active && currentDate <= endDate;
   });
-  // Assuming isActive is a boolean indicating the Budget's status
 
-  async function onSubmit({ categoryName, amount, description, budgetId }) {
+  async function onSubmit({
+    categoryName,
+    amount,
+    description,
+    budgetId,
+    transactionDate,
+  }) {
     if (budgetId === "none") {
       await insertTransaction({
         categoryName,
@@ -43,6 +49,7 @@ function AddTransaction() {
         description,
         amount: Number(amount),
         budgetId: null, // Include the selected budgetId
+        transactionDate,
       });
       return;
     }
@@ -60,6 +67,7 @@ function AddTransaction() {
       description,
       amount: Number(amount),
       budgetId: Number(budgetId), // Include the selected budgetId
+      transactionDate,
     });
 
     // Update the Budget with the new spent amount
@@ -130,6 +138,20 @@ function AddTransaction() {
             />
           </FormRow>
 
+          <FormRow
+            label="Transaction Date"
+            error={errors?.transactionDate?.message}
+          >
+            <input
+              type="date"
+              className="input"
+              placeholder="Enter Transaction Date"
+              {...register("transactionDate", {
+                required: "Transaction date is required",
+              })}
+            />
+          </FormRow>
+
           {/* Select input for Budget */}
           <FormRow label="Budget" error={errors?.budgetId?.message}>
             <select
@@ -141,7 +163,7 @@ function AddTransaction() {
               <option value="none">None</option>
               {activeBudgets.map((budget) => (
                 <option key={budget.id} value={budget.id}>
-                  {budget.name} (Limit: ${budget.totalAmount})
+                  {budget.name} (Limit: {formattedAmount(budget.totalAmount)})
                 </option>
               ))}
             </select>

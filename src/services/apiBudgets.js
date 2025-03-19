@@ -7,7 +7,6 @@ export async function getBudgets({ email }) {
     .eq("userEmail", email); // Filter Categories by user email
 
   if (error) {
-    // console.error("Error fetching Categories:", error);
     return []; // Return an empty array on error
   }
 
@@ -27,7 +26,6 @@ export async function insertBudget(
     .select();
 
   if (error) {
-    console.log(error.message);
     throw new Error(error.message);
   }
   return data;
@@ -42,7 +40,6 @@ export async function updateBudgetWithTransaction(id, spentAmount, userEmail) {
     .select();
 
   if (error) {
-    console.error(error.message);
     return []; // Return an empty array on error
   }
   return data;
@@ -64,7 +61,6 @@ export async function updateBudget(
     .select();
 
   if (error) {
-    console.error(error.message);
     return []; // Return an empty array on error
   }
   return data;
@@ -79,7 +75,6 @@ export async function toggleBudgetActive(id, active, userEmail) {
     .select();
 
   if (error) {
-    console.error(error.message);
     return []; // Return an empty array on error
   }
   return data;
@@ -94,18 +89,13 @@ export async function deleteBudget(id, userEmail) {
     .eq("userEmail", userEmail);
 
   if (updateError) {
-    console.error("Error updating transactions:", updateError.message);
     return;
   }
 
   // Now delete the budget
-  const { error: deleteError } = await supabase
+  await supabase
     .from("Budget")
     .delete()
     .eq("id", id)
     .eq("userEmail", userEmail);
-
-  if (deleteError) {
-    console.error("Error deleting budget:", deleteError.message);
-  }
 }

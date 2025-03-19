@@ -1,9 +1,9 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import TransactionFilter from "./TransactionFilter";
 import TransactionList from "./TransactionList";
 import BudgetSummary from "./BudgetSummary";
 import ActionButtons from "./ActionButtons";
-import {  formattedAmount } from "../Filter/GetUserOptions";
+import { formattedAmount } from "../Filter/GetUserOptions";
 
 function BudgetItem({
   budget,
@@ -42,9 +42,6 @@ function BudgetItem({
     useState(budgetTransactions);
 
   // Apply filters only when filters or budgetTransactions change
-  useEffect(() => {
-    applyFilters();
-  }, [filters, budgetTransactions]);
 
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
@@ -66,11 +63,11 @@ function BudgetItem({
     });
   };
 
-  const applyFilters = () => {
+  const applyFilters = useCallback(() => {
     const { startDate, endDate, minAmount, maxAmount, selectedCategories } =
       filters;
 
-    const filtered = budgetTransactions.filter((transaction) => {
+    const filtered = transactions.filter((transaction) => {
       const transactionDate = new Date(transaction.transactionDate);
       const isWithinDateRange =
         (!startDate || transactionDate >= new Date(startDate)) &&
@@ -85,8 +82,9 @@ function BudgetItem({
       return isWithinDateRange && isWithinAmountRange && isCategorySelected;
     });
 
-    setFilteredTransactions(filtered);
-  };
+    // setFilteredTransactions(filtered);
+    return filtered;
+  }, [filters, transactions]);
 
   // Memoize the summary calculations to avoid unnecessary recomputations
   const { mostFrequentCategory, totalAmount, categoryCounts } = useMemo(() => {
@@ -111,6 +109,18 @@ function BudgetItem({
 
     return { mostFrequentCategory, totalAmount, categoryCounts };
   }, [filteredTransactions]);
+
+  useEffect(() => {
+    const newFilteredTransactions = applyFilters();
+
+    // Avoid unnecessary state updates
+    setFilteredTransactions((prev) => {
+      if (JSON.stringify(prev) !== JSON.stringify(newFilteredTransactions)) {
+        return newFilteredTransactions;
+      }
+      return prev;
+    });
+  }, [applyFilters]);
 
   return (
     <div

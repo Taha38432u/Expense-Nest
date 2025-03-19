@@ -18,13 +18,6 @@ function AddBudget() {
     const formattedStartDate = formatDate(new Date(startDate));
     const formattedEndDate = formatDate(new Date(endDate));
 
-    console.log({
-      budgetName,
-      startDate: formattedStartDate,
-      endDate: formattedEndDate,
-      budgetAmount,
-    });
-
     // Insert the Budget with formatted dates
     insertBudget({
       name: budgetName,

@@ -1,28 +1,51 @@
+import { useEffect, useRef, useState } from "react";
 import useTransactions from "./useTransactions.js";
 import Spinner from "../../ui/Spinner.jsx";
 import { GetUserDetails } from "../Authentication/useDetailsUser.js";
-import TransactionItem from "./TransactionItem"; // Make sure this is correctly imported
+import TransactionItem from "./TransactionItem";
 import Button from "../../ui/Button.jsx";
-import { useState, useEffect } from "react";
 
 function EditTransaction() {
   const { email } = GetUserDetails();
-  const { transactions, isLoading } = useTransactions(email);
+  const {
+    transactions,
+    isLoading,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    totalCount,
+  } = useTransactions(email);
 
   const [sortOrder, setSortOrder] = useState("asc");
-  const [sortedTransactions, setSortedTransactions] = useState([]);
+  const observerRef = useRef(null);
 
+  // Sort transactions dynamically
+  const sortedTransactions = [...transactions].sort((a, b) =>
+    sortOrder === "asc"
+      ? new Date(a.transactionDate) - new Date(b.transactionDate)
+      : new Date(b.transactionDate) - new Date(a.transactionDate),
+  );
+
+  // Automatically fetch the next page when scrolling near the bottom
   useEffect(() => {
-    if (!transactions) return;
+    if (!hasNextPage) return;
 
-    const sorted = [...transactions].sort((a, b) => {
-      return sortOrder === "asc"
-        ? new Date(a.transactionDate) - new Date(b.transactionDate)
-        : new Date(b.transactionDate) - new Date(a.transactionDate);
-    });
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          fetchNextPage(); // Load next page when near bottom
+        }
+      },
+      {
+        rootMargin: "300px", // Start loading when 300px from bottom
+        threshold: 0.1,
+      },
+    );
 
-    setSortedTransactions(sorted);
-  }, [transactions, sortOrder]);
+    if (observerRef.current) observer.observe(observerRef.current);
+
+    return () => observer.disconnect();
+  }, [hasNextPage, fetchNextPage]);
 
   if (isLoading) return <Spinner />;
 
@@ -63,6 +86,17 @@ function EditTransaction() {
           disabled={sortOrder === "desc"}
         />
       </div>
+      <div className="mt-6 flex items-center justify-center">
+        <h2 className="text-lg font-bold text-white">Showing</h2>
+        <p className="ml-2 text-lg text-gray-300">
+          <span className="font-semibold text-white">
+            {transactions.length}
+          </span>
+          <span className="mx-1 text-gray-400">of</span>
+          <span className="font-semibold text-white">{totalCount}</span>{" "}
+          Transactions
+        </p>
+      </div>
 
       <ul className="mt-8 grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3">
         {sortedTransactions.map((transaction) => (
@@ -79,6 +113,11 @@ function EditTransaction() {
           />
         ))}
       </ul>
+
+      {/* Invisible div to trigger infinite scroll earlier */}
+      <div ref={observerRef} className="h-10 w-full" />
+
+      {isFetchingNextPage && <Spinner />}
     </div>
   );
 }

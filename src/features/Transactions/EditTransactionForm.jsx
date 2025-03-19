@@ -8,6 +8,8 @@ import Loading from "../../ui/Loading.jsx";
 import useEditTransaction from "./useEditTransaction.js";
 import useBudgets from "../Budget/useBudgets.js";
 import useUpdateBudgetWithTransaction from "../Budget/useUpdateBudgetOnTransaction.js";
+import Spinner from "../../ui/Spinner.jsx";
+import { formattedAmount } from "../Filter/GetUserOptions.jsx";
 
 function EditTransaction() {
   const { user } = useUser();
@@ -27,17 +29,15 @@ function EditTransaction() {
       categoryName: state?.categoryName || "", // Prefill category name
       amount: state?.amount || "", // Prefill amount
       description: state?.description || "", // Prefill description
+      transactionDate: state.transactionDate.split("T")[0],
     },
   });
-
   const { errors } = formState;
 
-  if (isLoading || isLoadingBudgets) return <Loading />;
+  if (isLoading || isLoadingBudgets) return <Spinner />;
   const activeBudgets = budgets.filter((budget) => budget.active === true);
 
-  async function onSubmit({ categoryName, amount, description, budgetId }) {
-    console.log("New Budget Id: ", budgetId);
-    console.log("Old Budget Id", oldBudgetId);
+  async function onSubmit({ categoryName, amount, description, budgetId, transactionDate }) {
     let selectedBudget;
     if (budgetId !== "null") {
       selectedBudget = budgets.find((budget) => budget.id === Number(budgetId));
@@ -57,6 +57,7 @@ function EditTransaction() {
           userEmail: email,
           amount: newAmount,
           description,
+          transactionDate,
           id: transactionId,
           budgetId: null,
         });
@@ -88,6 +89,7 @@ function EditTransaction() {
         userEmail: email,
         amount: newAmount,
         description,
+        transactionDate,
         id: transactionId, // Use the transactionId to update the existing one
         budgetId: budgetId === "null" ? null : Number(budgetId),
       });
@@ -110,6 +112,7 @@ function EditTransaction() {
       userEmail: email,
       amount: newAmount,
       description,
+      transactionDate,
       id: transactionId, // Use the transactionId to update the existing one
       budgetId: budgetId === null ? null : Number(budgetId),
     });
@@ -182,6 +185,20 @@ function EditTransaction() {
             />
           </FormRow>
 
+          <FormRow
+            label="Transaction Date"
+            error={errors?.transactionDate?.message}
+          >
+            <input
+              type="date"
+              className="input"
+              placeholder="Enter Transaction Date"
+              {...register("transactionDate", {
+                required: "Transaction date is required",
+              })}
+            />
+          </FormRow>
+
           {/* Select input for Budget */}
           <FormRow label="Budget" error={errors?.budgetId?.message}>
             <select
@@ -193,7 +210,7 @@ function EditTransaction() {
               <option value="null">None</option>
               {activeBudgets.map((budget) => (
                 <option key={budget.id} value={budget.id}>
-                  {budget.name} (Limit: ${budget.totalAmount})
+                  {budget.name} (Limit: {formattedAmount(budget.totalAmount)})
                 </option>
               ))}
             </select>

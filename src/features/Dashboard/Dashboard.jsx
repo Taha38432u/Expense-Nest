@@ -2,6 +2,7 @@ import useCategories from "../Categories/useCategories.js";
 import useBudgets from "../Budget/useBudgets.js";
 import useTransactions from "../Transactions/useTransactions.js";
 import useUser from "../Authentication/useUser.js";
+import { formattedAmount } from "../Filter/GetUserOptions";
 
 // Import icons
 import { FaUserCircle, FaMoneyCheckAlt, FaWallet } from "react-icons/fa";
@@ -80,7 +81,7 @@ function DashboardComponent() {
         <Card
           icon={<MdAttachMoney size={38} />}
           label="Total Budget Amount"
-          value={`$${totalAmount.toLocaleString()}`}
+          value={formattedAmount(totalAmount)}
           bgColor="bg-teal-600"
         />
       </Section>

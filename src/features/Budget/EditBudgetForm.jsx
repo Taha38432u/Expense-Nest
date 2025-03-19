@@ -29,13 +29,6 @@ function EditBudgetForm() {
     const formattedStartDate = formatDate(new Date(startDate));
     const formattedEndDate = formatDate(new Date(endDate));
 
-    console.log({
-      budgetName,
-      startDate: formattedStartDate,
-      endDate: formattedEndDate,
-      budgetAmount,
-    });
-
     // Insert the Budget with formatted dates
     updateBudget({
       id: Number(budgetId),

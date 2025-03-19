@@ -14,6 +14,7 @@ export default function useEditTransaction() {
       description,
       id,
       budgetId,
+      transactionDate,
     }) =>
       editTransactionApi(
         categoryName,
@@ -22,6 +23,7 @@ export default function useEditTransaction() {
         description,
         id,
         budgetId,
+        transactionDate
       ),
     onSuccess: () => {
       toast.success(`Transaction updated successfully`);
